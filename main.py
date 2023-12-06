@@ -13,11 +13,11 @@ screen = pygame.display.set_mode((800, 700))
 background = pygame.image.load('background.png')
 
 # background music
-mixer.music.load('background.wav')
+mixer.music.load('background(1).wav')
 mixer.music.play(-1)
 
 # title  and Icon
-pygame.display.set_caption("Space Invaders ===By Srichinmai")
+pygame.display.set_caption("Space Invaders === By Srichinmai")
 icon = pygame.image.load('logo.png')
 pygame.display.set_icon(icon)
 
@@ -108,6 +108,7 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
 
 # Game loop
 running = True
+exit_game = False
 while running:
 
     screen.fill((0, 0, 0))
@@ -120,10 +121,17 @@ while running:
 
         # if keystroke is pressed check wherther its pressed right or left
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_a:
                 playerX_change = -10
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_d:
                 playerX_change = 10
+            if event.key == pygame.K_q:
+                while not exit_game:
+                    pass
+
+                    pygame.running
+                    running() 
+                
             if event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
                     bulletX_sound = mixer.Sound('laser.wav')
@@ -133,7 +141,7 @@ while running:
                     fire_bullet(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_a or event.key == pygame.K_d:
                 playerX_change = 0
 
 
