@@ -7,7 +7,7 @@ from pygame import mixer
 pygame.init()
 
 # create the screen
-screen = pygame.display.set_mode((800, 700))
+screen = pygame.display.set_mode((800, 600))
 
 # Background
 background = pygame.image.load('background.png')
@@ -35,8 +35,7 @@ enemyX_change = []
 enemyY_change = []
 num_of_enemies = 10
 
-# for playing again  loop
-over_f = pygame.font.Font('freesansbold.ttf', 32)
+
 
 for i in range(num_of_enemies):
     enemyImg.append(pygame.image.load('enemy.png'))
@@ -59,29 +58,48 @@ bullet_state = "ready"
 # Score
 score_value = 0
 font = pygame.font.Font('freesansbold.ttf', 32)
-textX = 10
-textY = 10
+textX = 5
+textY = 5
+
+
+# High_Score
+high_score = 0 
+font = pygame.font.Font('freesansbold.ttf', 32)
+textX = 0
+textY = 0
+
+
+
+# for playing again  loop
+over_font = pygame.font.Font('freesansbold.ttf', 32)
 
 # Game Over text
 over_font = pygame.font.Font('freesansbold.ttf', 64)
 
 # play again
-over_f = pygame.font.Font('freesansbold.ttf', 32)
+over_font = pygame.font.Font('freesansbold.ttf', 32)
 
 
 def show_score(x, y):
     score = font.render("Score : " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
 
+def high_show_score(x, y):
+    score_value = 0 
+    if score_value > high_score :
+        high_score = score_value
+    score = font.render("High Score : " + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x + 30 , y + 30))
+    
 
 def play_over_text():
-    over_p = over_f.render("PLAY AGAIN ", True, (255, 255, 255,))
-    screen.blit(over_p, (200, 280))
+    over_text = over_font.render("PLAY AGAIN ", True, (255, 255, 255,))
+    screen.blit(over_text, (420, 260))
 
 
 def game_over_text():
     over_text = over_font.render("GAME OVER", True, (255, 255, 255))
-    screen.blit(over_text, (200, 250))
+    screen.blit(over_text, (200, 260))
 
 
 def player(x, y):
@@ -118,6 +136,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+            
 
         # if keystroke is pressed check wherther its pressed right or left
         if event.type == pygame.KEYDOWN:
@@ -160,6 +179,8 @@ while running:
             for j in range(num_of_enemies):
                 enemyY[j] = 2000
             game_over_text()
+            play_over_text()
+            
             break
 
         enemyX[i] += enemyX_change[i]
@@ -194,4 +215,6 @@ while running:
 
     player(playerX, playerY)
     show_score(textX, textY)
+    high_show_score(textX, textY)
+    
     pygame.display.update()
